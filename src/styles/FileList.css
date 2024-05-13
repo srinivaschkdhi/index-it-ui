@@ -1,0 +1,16 @@
+/* FileList.css */
+.file-list ul {
+    list-style: none; /* Removes bullet points from list */
+    padding: 0;
+}
+
+.file-list li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f0f0f0;
+    cursor: pointer; /* Makes it obvious that the item is clickable */
+}
+
+.file-list li:hover {
+    background-color: #e0e0e0; /* Slight color change on hover for feedback */
+}
