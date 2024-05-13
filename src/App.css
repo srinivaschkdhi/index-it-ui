@@ -1,17 +1,19 @@
-/* App.css */
 .App {
-  display: flex; /* Establishes a flex container */
-  height: 100vh; /* Full view height to fill the screen */
+  display: flex;
+  height: 100vh;
+  width: 100vw; 
 }
 
 .panel-left {
-  width: 30%; /* Assigns 30% of the flex container's width to the left panel */
-  background-color: #f4f4f4; /* Light grey background for visual distinction */
-  overflow-y: auto; /* Adds scroll to the panel if content overflows */
+  width: 30%;
+  background-color: #f4f4f4;
+  overflow-y: auto;
+  height: 100vh; 
 }
 
 .panel-right {
-  width: 70%; /* Assigns 70% of the flex container's width to the right panel */
-  background-color: #fff; /* White background for the PDF viewer */
-  overflow-y: auto; /* Adds scroll to the panel if content overflows */
+  width: 70%;
+  background-color: #fff;
+  overflow-y: auto;
+  height: 100vh; 
 }
