@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FileList from './components/FileList';
 import PDFViewer from './components/PDFViewer';
+import FieldModal from './components/FieldModal';
 import './App.css';
 
 function App() {
     const [files, setFiles] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const openModal = () => setModalIsOpen(true);
+    const closeModal = () => setModalIsOpen(false);
+    const saveFields = () => {
+        console.log("Fields saved");
+        closeModal();
+    };
 
     useEffect(() => {
         const directoryPath = "C:/Users/Srinivas Chintakindh/Downloads/indexit";
@@ -31,10 +40,16 @@ function App() {
     return (
         <div className="App">
             <div className="panel-left">
-                <FileList files={files} onSelectFile={handleFileSelect} />
+                <FileList onSelectFile={handleFileSelect} />
             </div>
             <div className="panel-right">
                 {selectedFile ? <PDFViewer fileUrl={selectedFile} /> : <div>Select a file to view</div>}
+                <button onClick={openModal} className="index-button">Index It</button>
+                <FieldModal
+                    isOpen={modalIsOpen}
+                    onClose={closeModal}
+                    onSave={saveFields}
+                />
             </div>
         </div>
     );

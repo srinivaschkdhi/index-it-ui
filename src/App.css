@@ -15,5 +15,20 @@
   width: 70%;
   background-color: #fff;
   overflow-y: auto;
-  height: 100vh; 
+  position: relative; /* Needed for absolute positioning of the button if desired */
+  padding: 20px; /* Adds spacing inside the right panel */
+}
+
+.index-button {
+  position: absolute; /* Positions the button at the bottom or top as needed */
+  bottom: 20px; /* Position at the bottom of the panel */
+  left: 50%;
+  transform: translateX(-50%); /* Center the button horizontally */
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }
