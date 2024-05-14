@@ -19,34 +19,6 @@ function App() {
 
     const directoryPath = "C:/Users/Srinivas Chintakindh/Downloads/indexit";
 
-    const openModal = () => setModalIsOpen(true);
-    const closeModal = () => setModalIsOpen(false);
-    const saveFields = (fieldsData) => {
-
-        let result = fieldsData.map((ele) => {
-            return {
-                name: ele,
-                dataType: 'String'
-            };
-        });
-
-        axios.post(`http://localhost:8080/api/field-definitions/${currentDocumentUUID}`, result)  // Adjust the endpoint as necessary
-            .then(response => {
-                console.log('Fields saved successfully', response.data);
-                setIsIndexing(true); // Assuming you update the layout to show fields
-                closeModal();
-            })
-            .catch(error => {
-                console.error('Error saving fields:', error);
-            });
-
-
-        setFields(fieldsData);
-        setIsIndexing(true); // Change layout after defining fields
-        setIsFieldValueModalOpen(true);
-        closeModal();
-    };
-
     useEffect(() => {
         axios.get(`http://localhost:8080/api/pdf/files?directoryPath=${directoryPath}`)
             .then(response => {
@@ -72,6 +44,34 @@ function App() {
             getFieldDefinitions();
         }
     }, [isFieldValueModalOpen]);
+
+
+    const openModal = () => setModalIsOpen(true);
+
+    const closeModal = () => setModalIsOpen(false);
+
+    const saveFields = (fieldsData) => {
+
+        let result = fieldsData.map((ele) => {
+            return {
+                name: ele,
+                dataType: 'String'
+            };
+        });
+
+        axios.post(`http://localhost:8080/api/field-definitions/${currentDocumentUUID}`, result)  // Adjust the endpoint as necessary
+            .then(response => {
+                console.log('Fields saved successfully', response.data);
+                setIsIndexing(true); // Assuming you update the layout to show fields
+                setFields(fieldsData);
+                setIsIndexing(true); // Change layout after defining fields
+                setIsFieldValueModalOpen(true);
+                closeModal();
+            })
+            .catch(error => {
+                console.error('Error saving fields:', error);
+            });
+    };
 
     const getFieldDefinitions = async () => {
         const response = await axios.get(`http://localhost:8080/api/field-definitions/${currentDocumentUUID}`);
@@ -127,6 +127,7 @@ function App() {
                     <div className="panel-left">
                         <FileList onSelectFile={handleFileSelect} />
                     </div>
+
                     <div className="panel-right">
                         {selectedFile && <PDFViewer fileUrl={selectedFile} />}
                         <button onClick={openModal} className="index-button">Index It</button>
