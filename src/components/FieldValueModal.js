@@ -22,16 +22,10 @@ function FieldValueModal({ fieldDefinitions,...props }) {
     const namedFields = fieldDefinitions.filter(def => def.name && def.name.trim() !== '');
 
     const handleSubmit = () => {
-        console.log("Button clicked");
-        console.log('field defintions',fieldDefinitions);
-        console.log('field values',fieldValues);
-
         const transformedData = Object.entries(fieldValues).map(([key, value]) => ({
             fieldDefinition: { id: Number(key) },
             fieldValue: value,
         }));
-
-        console.log("transformedData", transformedData);
 
         axios({
             method: 'POST',

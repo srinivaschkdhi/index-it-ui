@@ -65,8 +65,11 @@ function App() {
                 setIsIndexing(true); // Assuming you update the layout to show fields
                 setFields(fieldsData);
                 setIsIndexing(true); // Change layout after defining fields
-                setIsFieldValueModalOpen(true);
-                closeModal();
+
+                getFieldDefinitions().then(()=>{
+                    setIsFieldValueModalOpen(true);
+                    closeModal();
+                })
             })
             .catch(error => {
                 console.error('Error saving fields:', error);
