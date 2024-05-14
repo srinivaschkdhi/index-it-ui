@@ -1,7 +1,6 @@
 import React from 'react';
 
 function FieldsDisplay({ fields }) {
-    console.log(fields);
     return (
         <div>
             <h2>Index Fields</h2>
@@ -11,7 +10,7 @@ function FieldsDisplay({ fields }) {
                     <input 
                         type="text" 
                         value={field.value} 
-                        onChange={(e) => field.onChange(e.target.value, index)}  // Make sure to handle changes appropriately
+                        onChange={(e) => field.onChange(e.target.value, index)}
                     />
                 </div>
             ))}

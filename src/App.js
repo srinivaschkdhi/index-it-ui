@@ -3,7 +3,6 @@ import axios from 'axios';
 import FileList from './components/FileList';
 import PDFViewer from './components/PDFViewer';
 import FieldModal from './components/FieldModal';
-import FieldsDisplay from './components/FieldsDisplay';
 import FieldValueModal from './components/FieldValueModal';
 import './App.css';
 

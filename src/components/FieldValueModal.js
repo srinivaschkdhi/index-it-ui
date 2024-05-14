@@ -45,6 +45,7 @@ function FieldValueModal({ fieldDefinitions,...props }) {
             .catch((error) => {
                 console.log(error)
             });
+            
     };
 
     return (

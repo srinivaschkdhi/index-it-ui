@@ -3,19 +3,16 @@ import axios from 'axios';
 import '../styles/FieldModal.css'; // Assuming you have some basic CSS
 
 function FieldModal({ isOpen, onClose, onSave, documentUUID }) {
-    const [fields, setFields] = useState(Array(8).fill('')); // Initialize with empty array or default values
+    const [fields, setFields] = useState(Array(8).fill(''));
 
     useEffect(() => {
         if (isOpen && documentUUID) {
             axios.get(`http://localhost:8080/api/field-definitions/${documentUUID}`)
                 .then(response => {
-                    // Assuming the response body directly contains the array of fields
                     if (response.status === 200) {
                         if(response.data.length === 0){
-                            // Server responded with an empty array
                             setFields(Array(8).fill(''));
                         } else {
-                            // Server responded with field definitions, map them to state
                             setFields(response.data.map(field => field.name || ''));
                         }
                     }
@@ -25,9 +22,8 @@ function FieldModal({ isOpen, onClose, onSave, documentUUID }) {
                     setFields(Array(8).fill('')); // Reset fields or handle differently
                 });
         }
-    }, [isOpen, documentUUID]); // Dependency array to trigger effect when modal opens or UUID changes
+    }, [isOpen, documentUUID]);
 
-    // Handle input change
     const handleChange = (index, value) => {
         const newFields = [...fields];
         newFields[index] = value;
@@ -37,7 +33,7 @@ function FieldModal({ isOpen, onClose, onSave, documentUUID }) {
     // Handle save
     const handleSave = (e) => {
         e.preventDefault();
-        onSave(fields); // Pass the fields data to onSave
+        onSave(fields);
     };
 
     if (!isOpen) return null;
