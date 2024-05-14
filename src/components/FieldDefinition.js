@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/FieldModal.css'; // Assuming you have some basic CSS
 
-function FieldModal({ isOpen, onClose, onSave, documentUUID }) {
+function FieldDefinition({ isOpen, onClose, onSave, documentUUID }) {
     const [fields, setFields] = useState(Array(8).fill(''));
 
     useEffect(() => {
@@ -60,4 +60,4 @@ function FieldModal({ isOpen, onClose, onSave, documentUUID }) {
     );
 }
 
-export default FieldModal;
+export default FieldDefinition;

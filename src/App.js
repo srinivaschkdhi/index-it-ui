@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FileList from './components/FileList';
 import PDFViewer from './components/PDFViewer';
-import FieldModal from './components/FieldModal';
+import FieldDefinition from './components/FieldDefinition';
 import FieldValueModal from './components/FieldValueModal';
 import './App.css';
 
@@ -104,7 +104,7 @@ function App() {
             });
     };
 
-    const handleFormSubmit = () => {
+    const handleFieldValuesSubmit = () => {
         setIsIndexing(false);
     };
 
@@ -120,7 +120,7 @@ function App() {
                             isOpen={isFieldValueModalOpen}
                             onClose={() => setIsFieldValueModalOpen(false)}
                             fieldDefinitions={fieldDefinitions}
-                            onFormSubmit={handleFormSubmit}
+                            onFormSubmit={handleFieldValuesSubmit}
                             onSave={saveFile}
                         />
                     </div>
@@ -134,7 +134,7 @@ function App() {
                     <div className="panel-right">
                         {selectedFile && <PDFViewer fileUrl={selectedFile} />}
                         <button onClick={openModal} className="index-button">Index It</button>
-                        <FieldModal
+                        <FieldDefinition
                             isOpen={modalIsOpen}
                             onClose={closeModal}
                             onSave={saveFields}
