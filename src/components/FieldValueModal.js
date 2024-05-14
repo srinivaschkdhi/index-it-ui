@@ -59,7 +59,8 @@ function FieldValueModal({ fieldDefinitions,...props }) {
                     />
                 </div>
             ))}
-            <button onClick={handleSubmit}>Log Values</button>
+            <button onClick={handleSubmit}>Save metadata</button>
+            <button onClick={props.onSave}>Save file</button>
         </div>
     );
 }

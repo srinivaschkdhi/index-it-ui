@@ -14,11 +14,11 @@ function App() {
     const [fields, setFields] = useState([]);
     const [isIndexing, setIsIndexing] = useState(false); // Controls the layout
     const [currentDocumentUUID, setCurrentDocumentUUID] = useState(null);
+    const [currentFileName,setCurrentFileName] = useState(null);
     const [isFieldValueModalOpen, setIsFieldValueModalOpen] = useState(false);
     const [fieldDefinitions, setFieldDefinitions] = useState([]);
 
     const directoryPath = "C:/Users/Srinivas Chintakindh/Downloads/indexit";
-
 
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
@@ -30,8 +30,6 @@ function App() {
                 dataType: 'String'
             };
         });
-
-
 
         axios.post(`http://localhost:8080/api/field-definitions/${currentDocumentUUID}`, result)  // Adjust the endpoint as necessary
             .then(response => {
@@ -58,6 +56,7 @@ function App() {
                     const firstFile = response.data[0];
                     setSelectedFile(`http://localhost:8080/api/pdf/files/${firstFile.name}?path=${directoryPath}`);
                     setCurrentDocumentUUID(firstFile.id);
+                    setCurrentFileName(firstFile.name);
                 }
             })
             .catch(error => {
@@ -84,6 +83,23 @@ function App() {
     const handleFileSelect = (file) => {
         setSelectedFile(`http://localhost:8080/api/pdf/files/${file.name}?path=${directoryPath}`);
         setCurrentDocumentUUID(file.id);
+        setCurrentFileName(file.name);
+    };
+
+    const saveFile = () => {
+        const filePath = `${directoryPath}/${currentFileName}`
+
+        axios.post('http://localhost:8080/save-file', `filePath=${encodeURIComponent(filePath)}`, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     const handleFormSubmit = () => {
@@ -103,6 +119,7 @@ function App() {
                             onClose={() => setIsFieldValueModalOpen(false)}
                             fieldDefinitions={fieldDefinitions}
                             onFormSubmit={handleFormSubmit}
+                            onSave={saveFile}
                         />
                     </div>
                 </>
