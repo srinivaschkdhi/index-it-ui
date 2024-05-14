@@ -19,6 +19,18 @@
   padding: 20px; /* Adds spacing inside the right panel */
 }
 
+.index-panel-left {
+  width: 70%;
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+.index-panel-right {
+  width: 30%;
+  background-color: #f4f4f4;
+  overflow-y: auto;
+}
+
 .index-button {
   position: absolute; /* Positions the button at the bottom or top as needed */
   bottom: 20px; /* Position at the bottom of the panel */

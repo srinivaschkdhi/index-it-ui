@@ -1,19 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import '../styles/FieldModal.css'; // Assuming you have some basic CSS
 
-function FieldModal({ isOpen, onClose, onSave }) {
+function FieldModal({ isOpen, onClose, onSave, documentUUID }) {
+    const [fields, setFields] = useState(Array(8).fill('')); // Initialize with empty array or default values
+
+    useEffect(() => {
+        if (isOpen && documentUUID) {
+            axios.get(`http://localhost:8080/api/field-definitions/${documentUUID}`)
+                .then(response => {
+                    // Assuming the response body directly contains the array of fields
+                    if (response.status === 200) {
+                        if(response.data.length === 0){
+                            // Server responded with an empty array
+                            setFields(Array(8).fill(''));
+                        } else {
+                            // Server responded with field definitions, map them to state
+                            setFields(response.data.map(field => field.name || ''));
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching field definitions:', error);
+                    setFields(Array(8).fill('')); // Reset fields or handle differently
+                });
+        }
+    }, [isOpen, documentUUID]); // Dependency array to trigger effect when modal opens or UUID changes
+
+    // Handle input change
+    const handleChange = (index, value) => {
+        const newFields = [...fields];
+        newFields[index] = value;
+        setFields(newFields);
+    };
+
+    // Handle save
+    const handleSave = (e) => {
+        e.preventDefault();
+        onSave(fields); // Pass the fields data to onSave
+    };
+
     if (!isOpen) return null;
 
     return (
         <div className="modal-backdrop">
             <div className="modal-content">
                 <h2>Define Fields</h2>
-                <form onSubmit={(e) => {
-                    e.preventDefault();
-                    onSave(); // You might want to pass some data
-                }}>
-                    {Array.from({ length: 8 }).map((_, index) => (
-                        <input key={index} type="text" placeholder={`Field ${index + 1}`} />
+                <form onSubmit={handleSave}>
+                    {fields.map((field, index) => (
+                        <input
+                            key={index}
+                            type="text"
+                            placeholder={`Field ${index + 1}`}
+                            value={field}
+                            onChange={(e) => handleChange(index, e.target.value)}
+                        />
                     ))}
                     <button type="submit">Save</button>
                     <button type="button" onClick={onClose}>Close</button>
